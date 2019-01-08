@@ -1,0 +1,90 @@
+package findbook;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+public class Find {
+ 
+    public static void main(String[] args) throws Nobook {
+        // TODO 自动生成的方法存根
+        String[] book= {"高数","英语","JAVA","信号"};
+        Find book1=new Find();
+        book1.findways(book);
+    }
+    //查找方法
+    public void findways(String[] book) throws Nobook{
+        Scanner in=new Scanner(System.in);
+        try {
+            System.out.println("输入命令：1-按照名称查找图书；2-按照序号查找图书");
+            int a=in.nextInt();
+            switch(a) {
+            case 1:
+                findname(book);
+                break;
+            case 2:
+                findnumber(book);
+                break;
+                 
+            }
+            in.close();
+        }catch(InputMismatchException e) {
+            System.out.println("请输入整数！！！");
+            findways(book);
+        }
+    }
+    //按书名查找
+    public void findname(String[] book) throws Nobook{
+        Scanner in=new Scanner(System.in);
+            System.out.println("输入图书名称：");
+            String a=in.nextLine();
+            boolean flag=false;
+            try {
+            for(int i=0;i<book.length;i++) {
+                if(a.equals(book[i])) {
+                    System.out.println("book:"+book[i]);
+                    flag=true;
+                    break;
+                }
+            }
+            in.close();
+            if(!flag) {
+                throw new Nobook();
+            }
+            }catch(Nobook e){    
+                findways(book);
+            }
+    }
+    //按序号查找
+    public void findnumber(String[] book) throws Nobook{
+        Scanner in=new Scanner(System.in);
+            System.out.println("输入图书序号：");
+            int a=in.nextInt();
+            boolean flag=false;
+            try {
+            for(int i=0;i<book.length;i++) {
+                if(a==i) {
+                    System.out.println("book:"+book[i]);
+                    flag=true;
+                    break;
+                }
+            }
+            in.close();
+            if(!flag) {
+                throw new Nobook();
+            }
+            }catch(InputMismatchException e) {
+                System.out.println("请输入整数！！！");
+                findways(book);
+            }catch(Nobook e) {
+                System.out.println(e.getMessage());
+                findways(book);
+            }
+    }
+}
+ 
+//自定义异常
+package findbook;
+ 
+public class Nobook extends Exception{
+    public Nobook(){
+        System.out.println("图书不存在！");
+    }
+}
